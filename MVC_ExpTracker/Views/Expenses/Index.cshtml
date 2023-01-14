@@ -1,0 +1,77 @@
+﻿@model IEnumerable<MVC_ExpTracker.Models.ExpenseViewModel>
+
+@{
+    ViewBag.Title = "Expense";
+}
+
+<br />
+<h2>Expense</h2>
+<br />
+
+<p>
+    <a href="@Url.Action("AddorEdit","Expenses")" class="btn btn-default"><i class="fa fa-plus"></i>    Add New</a>
+</p>
+<table class="table table-striped">
+    <thead class="table-heading">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td>
+            <td>
+                <a href="@Url.Action("AddorEdit","Expenses", new { id = item.ExpenseId })" class="btn btn-default"><i class="fa fa-pencil"></i> Edit</a>
+                <a onclick="Delete(@item.ExpenseId)" class="btn btn-default"><i class="fa fa-trash"></i> Delete</a>
+            </td>
+        </tr>
+    }
+
+</table>
+
+@section scripts{
+    <script>
+            $(function () {
+                var message = '@TempData["successMessage"]'
+                if (message != '')
+                    alertify.success(message);
+            });
+
+            function Delete(id) {
+                alertify.confirm('Expense Tracker', 'Are you sure to delete this expense ?', function () {
+                    window.location.href = '@Url.Action("Delete","Expenses")/' + id;
+                }, null);
+            }
+    </script>
+}

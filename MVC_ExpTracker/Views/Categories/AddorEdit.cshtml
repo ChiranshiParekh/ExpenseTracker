@@ -1,0 +1,49 @@
+﻿@model MVC_ExpTracker.Models.Category
+@{
+    ViewBag.Title = "Add Category";
+}
+
+
+<div class="form-body">
+
+    @using (Html.BeginForm())
+    {
+        <center><h2 style="color:white">Category</h2></center>
+        @Html.HiddenFor(model => model.CategoryId)
+
+        <div class="form-group">
+            <label for="name">Name</label>
+            @Html.EditorFor(model => model.CategoryName)
+            @Html.ValidationMessageFor(model => model.CategoryName)
+        </div>
+
+        <div class="form-group">
+            <label for="limit">Limit</label>
+            @Html.EditorFor(model => model.CategoryLimit)
+            @Html.ValidationMessageFor(model => model.CategoryLimit)
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Submit" class="btn button" />
+            <input type="reset" value="Reset" class="btn button" />
+        </div>
+    }
+
+</div>
+
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval");
+
+<script>
+            $(function () {
+                var message = '@TempData["successMessage"]'
+                if (message != '')
+                    alertify.success(message);
+
+                var failure = '@TempData["failureMessage"]'
+                if (failure != '')
+                    alertify.error(failure);
+
+            });
+</script>
+}

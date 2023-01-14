@@ -1,0 +1,55 @@
+﻿@model IEnumerable<MVC_ExpTracker.Models.Category>
+
+@{
+    ViewBag.Title = "Category";
+}
+
+<br />
+<h2>Category</h2>
+<br />
+
+<p>
+    <a href="@Url.Action("AddorEdit","Categories")" class="btn btn-default"><i class="fa fa-plus"></i>    Add New</a>
+</p>
+<table class="table table-striped">
+    <thead class="table-heading">
+        <tr>
+            <th>Name</th>
+            <th>Limit</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CategoryName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CategoryLimit)
+            </td>
+            <td>
+                <a href="@Url.Action("AddorEdit","Categories", new { id = item.CategoryId })" class="btn btn-default"><i class="fa fa-pencil"></i> Edit</a>
+                <a onclick="Delete(@item.CategoryId)" class="btn btn-default"><i class="fa fa-trash"></i> Delete</a>
+            </td>
+        </tr>
+    }
+
+</table>
+
+@section scripts{
+    <script>
+            $(function () {
+                var message = '@TempData["successMessage"]'
+                if (message != '')
+                    alertify.success(message);
+            });
+
+            function Delete(id) {
+                alertify.confirm('Expense Tracker', 'Are you sure to delete this category ?', function () {
+                    window.location.href = '@Url.Action("Delete","Categories")/' + id;
+                }, null);
+            }
+    </script>
+}

@@ -1,0 +1,93 @@
+﻿@model MVC_ExpTracker.Models.DashboardViewModel
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/Dashboard_Layout.cshtml";
+}
+
+<h2>Dashboard</h2>
+@*Sidebar Menu*@
+<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
+    <div class="profile-sidebar">
+        <div class="profile-usertitle">
+            <div class="profile-usertitle-name">
+                <b>Category</b>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="divider"></div>
+    <div >
+        <ul id="myDIV" class="nav menu">
+            <li><a href="@Url.Action("Dashboard","Home", new { id = 0 })">&nbsp; All</a></li>
+            @foreach (var item in Model.Categories)
+            {
+                <li><a href="@Url.Action("Dashboard","Home", new { id = item.CategoryId })" >@item.CategoryName</a></li>
+            }
+        </ul>
+    </div>
+</div>
+@*Sidebar Menu*@
+
+@*Expense List Body*@
+<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+
+    <div class="row">
+        <div class="col-md-3">
+            <h1 class="page-header">
+                Expense
+            </h1>
+        </div>
+
+        <div class="col-xs-6 col-md-3 col-lg-3 no-padding">
+            <div class="panel panel-teal panel-widget border-right">
+                <div class="row no-padding">
+                    <div class="large">@Model.Limit</div>
+                    <div class="text-success "><b>Total Limit</b></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-6 col-md-3 col-lg-3 no-padding">
+            <div class="panel panel-teal panel-widget border-right">
+                <div class="row no-padding">
+                    <div class="large">@Model.ExpenseAmt</div>
+                    <div class="text-warning"><b>Total Expense</b></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="panel panel-container">
+        <div class="row">
+            <div class="col-xs-12 ">
+                <table class="table-condensed table">
+                    <thead class="table-striped">
+                        <tr>
+                            <th>Category</th>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Date</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Expenses)
+                        {
+                            <tr>
+                                <td>@item.Category</td>
+                                <td>@item.Title</td>
+                                <td>@item.Description</td>
+                                <td>@item.Date</td>
+                                <td>@item.Amount</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div><!--/.row-->
+    </div>
+
+</div>
+@*Expense List Body*@
+

@@ -1,0 +1,60 @@
+﻿@model MVC_ExpTracker.Models.Expense
+@{
+    ViewBag.Title = "AddorEdit";
+}
+
+
+
+<div class="form-body">
+    @using (Html.BeginForm())
+    {
+        <center><h2 style="color:white">Expense</h2></center>
+        @Html.HiddenFor(model => model.ExpenseId)
+
+        <div class="form-group">
+            <label for="category">Select Category</label><br />
+            @Html.DropDownList("CategoryId", new SelectList(ViewBag.category, "CategoryId", "CategoryName"), new { @class = "my-dropdown" })
+            @Html.ValidationMessageFor(model => model.Category.CategoryName)
+        </div>
+
+        <div class="form-group">
+            <label for="title">Title</label>
+            @Html.EditorFor(model => model.ExpenseTitle)
+            @Html.ValidationMessageFor(model => model.ExpenseTitle)
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description</label>
+            @Html.EditorFor(model => model.ExpenseDescription)
+            @Html.ValidationMessageFor(model => model.ExpenseDescription)
+        </div>
+
+        <div class="form-group">
+            <label for="amount">Amount</label>
+            @Html.EditorFor(model => model.ExpenseAmount)
+            @Html.ValidationMessageFor(model => model.ExpenseAmount)
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Submit" class="btn button" />
+            <input type="reset" value="Reset" class="btn button" />
+        </div>
+    }
+</div>
+
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval");
+
+    <script>
+            $(function () {
+                var message = '@TempData["successMessage"]'
+                if (message != '')
+                    alertify.success(message);
+
+                var failure = '@TempData["failureMessage"]'
+                if (failure != '')
+                    alertify.error(failure);
+
+            });
+    </script>
+}
